@@ -1,0 +1,46 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 HelveticaNeue;\f2\fmodern\fcharset0 Courier;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;\red19\green33\blue61;
+\red18\green31\blue60;\red255\green255\blue255;\red19\green32\blue61;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c100000\c100000\c100000\c0;\cssrgb\c9604\c17549\c30813;
+\cssrgb\c9020\c16863\c30196;\cssrgb\c100000\c100000\c100000;\cssrgb\c9312\c17206\c30505;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww16380\viewh15740\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 #!/bin/bash\
+\
+S3_URI=s3://tifes-sql-files/V1__shopwise.sql\
+RDS_ENDPOINT=dev-rds-db.cn2ysc0w0mye.us-east-1.rds.amazonaws.com\
+RDS_DB_NAME=applicationdb\
+RDS_DB_USERNAME=tife\
+RDS_DB_PASSWORD=
+\f1\fs26 tife1234
+\f0\fs24 \
+\
+# Update all packages\
+sudo yum update -y\
+\
+# Download and extract Flyway\
+sudo \cf2 \cb3 \expnd0\expndtw0\kerning0
+wget -qO- https://download.red-gate.com/maven/release/com/redgate/flyway/flyway-commandline/11.3.0/flyway-commandline-11.3.0-linux-x64.tar.gz | tar -xvz
+\f2\fs32 \cf5 \cb6 \
+
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+# Create a symbolic link to make Flyway accessible globally\
+\pard\tx720\pardeftab720\partightenfactor0
+\cf2 \cb3 \expnd0\expndtw0\kerning0
+sudo ln -s `pwd`/flyway-11.3.0/flyway /usr/local/bin
+\f2\fs32 \cf5 \cb6 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+# Create the SQL directory for migrations\
+sudo mkdir sql\
+\
+# Download the migration SQL script from AWS S3\
+sudo aws s3 cp "$S3_URI" sql/\
+\
+# Run Flyway migration\
+/usr/local/bin/flyway -url="jdbc:mysql://$RDS_ENDPOINT:3306/$RDS_DB_NAME?useSSL=false&allowPublicKeyRetrieval=true" -user="$RDS_DB_USERNAME" -password="$RDS_DB_PASSWORD" -locations=filesystem:/home/ec2-user/sql/ migrate\
+}
