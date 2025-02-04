@@ -8,11 +8,7 @@
 
 This project demonstrates the deployment of a dynamic web application on AWS using an EC2 instance while ensuring scalability, security, and high availability. The deployment utilizes AWS services such as VPC, ALB, Auto Scaling, RDS, S3, and IAM for a secure and efficient cloud-hosted application.  
 
-The architecture is designed to follow best practices in cloud infrastructure management, including network segmentation, load balancing, secure data storage, and automated scaling.  
-
-## Architecture Diagram  
-
-For a detailed architecture diagram, refer to the [GitHub Repository](https://github.com/tifedaramola/Dynamic-web-app-AWS.git).  
+The architecture is designed to follow best practices in cloud infrastructure management, including network segmentation, load balancing, secure data storage, and automated scaling.   
 
 ## Resources Used  
 
