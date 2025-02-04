@@ -1,3 +1,6 @@
+![Alt text](3._Host_a_Dynamic_Web_App_on_AWS.png)
+
+---
 # Dynamic Web Application Deployment on AWS
 
 This project demonstrates the deployment of a dynamic web application on AWS using various cloud services for scalability, security, and high availability. The setup ensures a reliable and secure environment for hosting a web application with an integrated database.
